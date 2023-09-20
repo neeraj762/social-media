@@ -173,6 +173,7 @@ const Profile = () => {
       ) : (
         <>
           <div className="images">
+            {console.log("test profile data " +data.coverPic)}
             <img src={"/upload/"+data.coverPic} alt="" className="cover" />
             <img src={"/upload/"+data.profilePic} alt="" className="profilePic" />
           </div>

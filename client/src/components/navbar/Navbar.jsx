@@ -42,7 +42,7 @@ console.log(currentUser);
             <NotificationsOutlinedIcon />
             <div className="user">
               { <img
-                src={"upload/"+currentUser.profilePic}
+                src={"/upload/"+currentUser.coverPic}
                 
                 alt=""
                /> }

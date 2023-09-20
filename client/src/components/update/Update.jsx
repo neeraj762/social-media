@@ -3,8 +3,10 @@ import { makeRequest } from "../../axios";
 import "./update.scss";
 import { useMutation, useQueryClient } from "react-query";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+// import { AuthContext } from "../../context/AuthContext";
 
 const Update = ({ setOpenUpdate, user }) => {
+  // const {currentUser} = useContext(AuthContext);
   const [cover, setCover] = useState(null);
   const [profile, setProfile] = useState(null);
   const [texts, setTexts] = useState({
@@ -16,7 +18,7 @@ const Update = ({ setOpenUpdate, user }) => {
   });
 
   const upload = async (file) => {
-    console.log(file)
+    console.log("uploading file "+file)
     try {
       const formData = new FormData();
       formData.append("file", file);
@@ -45,6 +47,42 @@ const Update = ({ setOpenUpdate, user }) => {
     }
   );
 
+  // const handleClick = async (e) => {
+  //   e.preventDefault();
+  
+  //   try {
+  //     // Create an array to store the promises for uploading cover and profile pictures
+  //     const uploadPromises = [];
+  
+  //     // Check if a new cover picture is selected and add it to the promises
+  //     if (cover) {
+  //       uploadPromises.push(upload(cover));
+  //     } else {
+  //       uploadPromises.push(user.coverPic); // Use the existing cover picture URL
+  //     }
+  
+  //     // Check if a new profile picture is selected and add it to the promises
+  //     if (profile) {
+  //       uploadPromises.push(upload(profile));
+  //     } else {
+  //       uploadPromises.push(user.profilePic); // Use the existing profile picture URL
+  //     }
+  
+  //     // Use Promise.all to upload both pictures in parallel and await the results
+  //     const [coverUrl, profileUrl] = await Promise.all(uploadPromises);
+  
+  //     // Update the user data with the new picture URLs and other text fields
+  //     mutation.mutate({ ...texts, coverPic: coverUrl, profilePic: profileUrl });
+  
+  //     // Close the update modal and reset the file inputs
+  //     setOpenUpdate(false);
+  //     setCover(null);
+  //     setProfile(null);
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
+  
   const handleClick = async (e) => {
     e.preventDefault();
   
@@ -54,12 +92,21 @@ const Update = ({ setOpenUpdate, user }) => {
     let profileUrl;
     coverUrl = cover ? await upload(cover) : user.coverPic;
     profileUrl = profile ? await upload(profile) : user.profilePic;
+
+   let info = JSON.parse(localStorage.getItem("user"));
+   console.log("informations" ,JSON.stringify(info))
+   info.profilePic = profileUrl;
+   info.coverPic = coverUrl;
+   console.log("informations" ,JSON.stringify(info))
+   localStorage.setItem("user",JSON.stringify(info));
     
     mutation.mutate({ ...texts, coverPic: coverUrl, profilePic: profileUrl });
     setOpenUpdate(false);
     setCover(null);
     setProfile(null);
   };
+
+
 
   return (
     <div className="update">

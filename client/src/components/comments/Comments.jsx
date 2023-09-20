@@ -53,7 +53,8 @@ setDesc("");
   return (
     <div className="comments">
       <div className="write">
-      <img src={"/upload/" + currentUser.profilePic} alt="" />
+        {console.log("test currentUser"+currentUser.name +currentUser.email+currentUser.profilePic)}
+      <img src={"../upload/" + currentUser.profilePic} alt="" />
         <input type="text" placeholder="write a comment" 
         value={desc}
         onChange={(e)=>setDesc(e.target.value)}
@@ -64,7 +65,8 @@ setDesc("");
         ?"loading..."
         :data.map((comment) => (
         <div className="comment">
-          <img src={"/upload/"+comment.profilePic} alt="" />
+          {console.log("test comment:" +comment.profilePic)}
+          <img src={"../upload/"+comment.profilePic} alt="" />
           <div className="info">
             <span>{comment.name}</span>
             <p>{comment.desc}</p>
